@@ -15,4 +15,57 @@
 			</if>
 		</where>
 	</select>
+	<select id="" parameterType="" resultMap="" >
+		SELECT
+		id, name
+		FROM
+		tb_user
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="name != null">
+				name = #{name}
+			</if>
+		</where>
+	</select>
+	<select id="" parameterType="" resultMap="" >
+		SELECT
+		id, name
+		FROM
+		tb_user
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="name != null">
+				name = #{name}
+			</if>
+		</where>
+	</select>
+	<select id="" parameterType="" resultMap="" >
+		SELECT
+		id, name
+		FROM
+		tb_user
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="name != null">
+				name = #{name}
+			</if>
+		</where>
+	</select>
+	<insert id="" parameterType="" >
+		INSERT INTO
+		tb_user
+<trim prefix="values (" suffix=")" suffixOverrides=",">
+NULL,
+			<if test="id != null">
+				#{id}
+			<if test="name != null">
+				#{name}
+		</trim>
+	</insert>
 </mapper>

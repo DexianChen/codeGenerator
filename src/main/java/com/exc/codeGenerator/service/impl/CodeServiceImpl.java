@@ -2,14 +2,16 @@ package com.exc.codeGenerator.service.impl;
 
 import com.exc.codeGenerator.model.RequestParam;
 import com.exc.codeGenerator.service.CodeService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 
+@Slf4j
 public class CodeServiceImpl implements CodeService {
 
     @Override
     public void select(RequestParam param) {
-        // 拼凑mybatis的sql语句
+        // 拼凑mybatis的查询sql语句
         StringBuilder sql = new StringBuilder();
         String[] databaseKeys = {};
         String[] requestKeys = {};
@@ -44,12 +46,61 @@ public class CodeServiceImpl implements CodeService {
         } else {
             sql.append("\r\n</select>\r\n");
         }
-        System.out.println(sql);
+        log.info("查询语句为：{}", sql.toString());
 
+        appendToFile(sql, param.getFilePath());
+    }
+
+    @Override
+    public void insert(RequestParam param) {
+        // 拼凑mybatis的查询sql语句
+        StringBuilder sql = new StringBuilder();
+        String[] databaseKeys = {};
+        String[] requestKeys = {};
+        if (!"".equals(param.getDatabaseKeys()) && !"".equals(param.getRequestKeys())) {
+            databaseKeys = param.getDatabaseKeys().split(",");
+            requestKeys = param.getRequestKeys().split(",");
+        }
+
+        sql.append("\t<insert id=\"\" parameterType=\"\" >\r\n")
+                .append("\t\tINSERT INTO\r\n\t\t")
+                .append(param.getTableName()).append("\r\n")
+                .append("<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\r\n")
+                .append("NULL,\r\n");
+
+        if (databaseKeys.length != 0 && databaseKeys.length == requestKeys.length) {
+            for (int i=0; i<databaseKeys.length; i++){
+                if (!"".equals(databaseKeys[i].trim()) && !"".equals(requestKeys[i].trim())) {
+                    sql.append("\t\t\t<if test=\"")
+                            .append(databaseKeys[i].trim())
+                            .append(" != null\">\r\n\t\t\t\t")
+                            .append("#{")
+                            .append(requestKeys[i].trim())
+                            .append("}\r\n");
+                }
+            }
+
+            sql.append("\t\t</trim>\r\n");
+            sql.append("\t</insert>\r\n");
+        } else {
+            sql.append("\r\n</insert>\r\n");
+        }
+
+//        log.info("插入语句为：{}", sql.toString());
+        System.out.println(sql);
+        appendToFile(sql, param.getFilePath());
+    }
+
+    /**
+     * 将sql语句追加到文件中
+     * @param sql sql语句
+     * @param filePath 文件路径
+     */
+    private void appendToFile(StringBuilder sql, String filePath) {
         // 追加到文件
         StringBuilder builder = new StringBuilder();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(param.getFilePath()));
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
             // 判断是否为空文件
             String firstLine = reader.readLine();
@@ -74,7 +125,7 @@ public class CodeServiceImpl implements CodeService {
                 }
             }
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(param.getFilePath()));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
             writer.flush();
             writer.write(builder.toString());
 

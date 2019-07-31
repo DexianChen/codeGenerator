@@ -18,10 +18,6 @@ import static com.exc.codeGenerator.platform.ServletUtil.getRequestPostStr;
 public class SelectServlet extends HttpServlet {
     private CodeService codeService = new CodeServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response){
-
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         RequestParam param = getRequestPostStr(request, RequestParam.class);
         codeService.select(param);

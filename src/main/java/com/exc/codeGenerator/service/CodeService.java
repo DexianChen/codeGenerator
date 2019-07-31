@@ -15,4 +15,10 @@ public interface CodeService {
      * @param param
      */
     void select(RequestParam param);
+
+    /**
+     * 插入
+     * @param param
+     */
+    void insert(RequestParam param);
 }

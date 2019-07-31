@@ -1,8 +1,14 @@
 package com.exc.codeGenerator.web;
 
+import com.exc.codeGenerator.model.RequestParam;
+import com.exc.codeGenerator.service.CodeService;
+import com.exc.codeGenerator.service.impl.CodeServiceImpl;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.exc.codeGenerator.platform.ServletUtil.getRequestPostStr;
 
 /**
  * 删除
@@ -10,11 +16,10 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-7-9
  */
 public class DeleteServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response){
-
-    }
+    private CodeService codeService = new CodeServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("delete");
+        RequestParam param = getRequestPostStr(request, RequestParam.class);
+        codeService.select(param);
     }
 }
