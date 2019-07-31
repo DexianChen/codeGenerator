@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>用户管理页面</title>
+		<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<script src="plugins/jquery-3.3.1.min.js"></script>
+		<script src="plugins/angular.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/controller/codeController.js"></script>
+		<script src="js/service/codeService.js"></script>
+	</head>
+	<body ng-app="code" ng-controller="codeController">
+		<select ng-init="entity.operation = operationList[0]"
+				ng-model="entity.operation" ng-options="x for x in operationList">
+		</select>
+		<div>
+			<table>请输入字段列表</table>
+			<input ng-model="entity.fieldList" placeholder="字段列表, 以逗号分隔"/>
+		</div>
+		<div>
+			<table>请输入表名</table>
+			<input ng-model="entity.tableName" placeholder="表名"/>
+		</div>
+		<div>
+			<table>请输入where条件, key</table>
+			<input ng-model="entity.conditionKeyList" placeholder="where 条件, key为数据库字段名列表, 以逗号分隔"/>
+		</div>
+		<div>
+			<table>请输入where条件, value</table>
+			<input ng-model="entity.conditionValueList" placeholder="where 条件, value为输入的字段名列表，以逗号分隔"/>
+		</div><div>
+			<table>文件路径</table>
+			<input ng-model="entity.filePath" placeholder="选择需要添加代码的文件路径"/>
+		</div>
+
+		<button type="button" ng-click="send()">发送</button>
+	</body>
+</html>
