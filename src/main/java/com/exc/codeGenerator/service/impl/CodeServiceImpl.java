@@ -65,8 +65,27 @@ public class CodeServiceImpl implements CodeService {
         sql.append("\t<insert id=\"\" parameterType=\"\" >\r\n")
                 .append("\t\tINSERT INTO\r\n\t\t")
                 .append(param.getTableName()).append("\r\n")
-                .append("<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\r\n")
-                .append("NULL,\r\n");
+                .append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\r\n")
+                .append("id\r\n");
+
+        if (databaseKeys.length != 0) {
+            for (int i=0; i<databaseKeys.length; i++){
+                if (!"".equals(databaseKeys[i].trim())) {
+                    sql.append("\t\t\t<if test=\"")
+                            .append(databaseKeys[i].trim())
+                            .append(" != null\">\r\n\t\t\t\t")
+                            .append(requestKeys[i].trim())
+                            .append("\r\n")
+                            .append("</if>\r\n");
+                }
+            }
+
+            sql.append("\t\t</trim>\r\n");
+        } else {
+            return;
+        }
+
+        sql.append("<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\r\n").append("NULL,\r\n");
 
         if (databaseKeys.length != 0 && databaseKeys.length == requestKeys.length) {
             for (int i=0; i<databaseKeys.length; i++){
@@ -76,14 +95,15 @@ public class CodeServiceImpl implements CodeService {
                             .append(" != null\">\r\n\t\t\t\t")
                             .append("#{")
                             .append(requestKeys[i].trim())
-                            .append("}\r\n");
+                            .append("}\r\n")
+                            .append("</if>\r\n");
                 }
             }
 
             sql.append("\t\t</trim>\r\n");
             sql.append("\t</insert>\r\n");
         } else {
-            sql.append("\r\n</insert>\r\n");
+            return;
         }
 
 //        log.info("插入语句为：{}", sql.toString());
