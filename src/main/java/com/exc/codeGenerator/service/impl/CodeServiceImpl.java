@@ -68,13 +68,14 @@ public class CodeServiceImpl implements CodeService {
                 .append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\r\n")
                 .append("id\r\n");
 
-        if (databaseKeys.length != 0) {
-            for (int i=0; i<databaseKeys.length; i++){
-                if (!"".equals(databaseKeys[i].trim())) {
+        if (conditionList.length != 0) {
+            for (String conditionField : conditionList) {
+                String javabeanField = getJavabeanFieldName(conditionField);
+                if (!"".equals(conditionField.trim())) {
                     sql.append("\t\t\t<if test=\"")
-                            .append(databaseKeys[i].trim())
+                            .append(javabeanField.trim())
                             .append(" != null\">\r\n\t\t\t\t")
-                            .append(requestKeys[i].trim())
+                            .append(conditionField.trim())
                             .append("\r\n")
                             .append("</if>\r\n");
                 }
