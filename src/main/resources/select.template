@@ -1,0 +1,10 @@
+    <select id="idValue" parameterType="parameterTypeValue" resultMap="resultMapValue" >
+        SELECT
+        columnValue
+        FROM tbNameValue
+        <where>
+            <if test="javabeanKey != null">
+                databaseKey = #{javabeanKey}
+            </if>
+        </where>
+    </select>

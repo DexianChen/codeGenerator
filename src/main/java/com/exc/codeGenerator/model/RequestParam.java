@@ -17,13 +17,9 @@ public class RequestParam {
      */
     private String tableName;
     /**
-     * where 条件, key为数据库字段名列表，以逗号分隔
+     * where条件字段名列表，以逗号分隔
      */
-    private String databaseKeys;
-    /**
-     * where 条件, value为输入的字段名列表，以逗号分隔
-     */
-    private String requestKeys;
+    private String conditionList;
     /**
      * 选择需要添加代码的文件路径
      */

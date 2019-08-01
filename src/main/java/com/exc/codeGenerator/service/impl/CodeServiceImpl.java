@@ -13,11 +13,13 @@ public class CodeServiceImpl implements CodeService {
     public void select(RequestParam param) {
         // 拼凑mybatis的查询sql语句
         StringBuilder sql = new StringBuilder();
-        String[] databaseKeys = {};
-        String[] requestKeys = {};
-        if (!"".equals(param.getDatabaseKeys()) && !"".equals(param.getRequestKeys())) {
-            databaseKeys = param.getDatabaseKeys().split(",");
-            requestKeys = param.getRequestKeys().split(",");
+        String[] conditionList = {};
+        if (!"".equals(param.getConditionList())) {
+            if (param.getConditionList().contains(",")) {
+                conditionList = param.getConditionList().split(",");
+            }else {
+                conditionList[0] = param.getConditionList();
+            }
         }
 
         sql.append("\t<select id=\"\" parameterType=\"\" resultMap=\"\" >\r\n")
@@ -26,21 +28,21 @@ public class CodeServiceImpl implements CodeService {
                 .append("\r\n\t\tFROM\r\n\t\t")
                 .append(param.getTableName());
 
-        if (databaseKeys.length != 0 && databaseKeys.length == requestKeys.length) {
+        if (conditionList.length != 0) {
             sql.append("\r\n\t\t<where>\r\n");
 
-            for (int i=0; i<databaseKeys.length; i++){
-                if (!"".equals(databaseKeys[i].trim()) && !"".equals(requestKeys[i].trim())) {
-                    sql.append("\t\t\t<if test=\"")
-                            .append(databaseKeys[i].trim())
-                            .append(" != null\">\r\n\t\t\t\t")
-                            .append(databaseKeys[i].trim())
-                            .append(" = #{")
-                            .append(requestKeys[i].trim())
-                            .append("}\r\n\t\t\t</if>\r\n");
-                }
+            for (String conditionField : conditionList) {
+                String javabeanField = getJavabeanFieldName(conditionField);
+
+                sql.append("\t\t\t<if test=\"")
+                        .append(javabeanField)
+                        .append(" != null\">\r\n\t\t\t\t")
+                        .append(conditionField.trim())
+                        .append(" = #{")
+                        .append(javabeanField)
+                        .append("}\r\n\t\t\t</if>\r\n");
             }
-            
+
             sql.append("\t\t</where>\r\n");
             sql.append("\t</select>\r\n");
         } else {
@@ -55,11 +57,9 @@ public class CodeServiceImpl implements CodeService {
     public void insert(RequestParam param) {
         // 拼凑mybatis的查询sql语句
         StringBuilder sql = new StringBuilder();
-        String[] databaseKeys = {};
-        String[] requestKeys = {};
-        if (!"".equals(param.getDatabaseKeys()) && !"".equals(param.getRequestKeys())) {
-            databaseKeys = param.getDatabaseKeys().split(",");
-            requestKeys = param.getRequestKeys().split(",");
+        String[] conditionList = {};
+        if (!"".equals(param.getConditionList())) {
+            conditionList = param.getConditionList().split(",");
         }
 
         sql.append("\t<insert id=\"\" parameterType=\"\" >\r\n")
@@ -87,14 +87,16 @@ public class CodeServiceImpl implements CodeService {
 
         sql.append("<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\r\n").append("NULL,\r\n");
 
-        if (databaseKeys.length != 0 && databaseKeys.length == requestKeys.length) {
-            for (int i=0; i<databaseKeys.length; i++){
-                if (!"".equals(databaseKeys[i].trim()) && !"".equals(requestKeys[i].trim())) {
+        if (conditionList.length != 0) {
+            for (String conditionField : conditionList) {
+                String javabeanField = getJavabeanFieldName(conditionField);
+
+                if (!"".equals(conditionField.trim())) {
                     sql.append("\t\t\t<if test=\"")
-                            .append(databaseKeys[i].trim())
+                            .append(javabeanField.trim())
                             .append(" != null\">\r\n\t\t\t\t")
                             .append("#{")
-                            .append(requestKeys[i].trim())
+                            .append(javabeanField.trim())
                             .append("}\r\n")
                             .append("</if>\r\n");
                 }
@@ -113,7 +115,8 @@ public class CodeServiceImpl implements CodeService {
 
     /**
      * 将sql语句追加到文件中
-     * @param sql sql语句
+     *
+     * @param sql      sql语句
      * @param filePath 文件路径
      */
     private void appendToFile(StringBuilder sql, String filePath) {
@@ -132,14 +135,14 @@ public class CodeServiceImpl implements CodeService {
                         .append("<mapper namespace=\"\">\r\n")
                         .append(sql)
                         .append("</mapper>");
-            }else {
-                builder.append(firstLine).append( "\r\n");
+            } else {
+                builder.append(firstLine).append("\r\n");
                 String str;
                 while ((str = reader.readLine()) != null) {
-                    if (str.endsWith("</mapper>") || builder.toString().endsWith("</mapper>")){
+                    if (str.endsWith("</mapper>") || builder.toString().endsWith("</mapper>")) {
                         builder.append(sql);
                         builder.append(str);
-                    }else {
+                    } else {
                         builder.append(str).append("\r\n");
                     }
                 }
@@ -154,5 +157,32 @@ public class CodeServiceImpl implements CodeService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 将数据库字段和javabean字段进行映射
+     * @param databaseFieldName 数据库字段
+     * @return javabean字段
+     */
+    private String getJavabeanFieldName(String databaseFieldName) {
+        StringBuilder sb = new StringBuilder();
+
+        String[] words ={};
+        if (databaseFieldName.trim().contains("_")){
+            words = databaseFieldName.trim().split("_");
+        }else {
+            return databaseFieldName.trim();
+        }
+
+        for (int j = 0; j < words.length; j++){
+            if (j != 0) {
+                sb.append(words[j].substring(0 ,1).toUpperCase());
+                sb.append(words[j].substring(1));
+            }else {
+                sb.append(words[j]);
+            }
+        }
+
+        return sb.toString();
     }
 }
