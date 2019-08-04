@@ -20,7 +20,6 @@ public class SelectServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         RequestParam param = getRequestPostStr(request, RequestParam.class);
-        System.out.println(param.toString());
         codeService.select(param);
     }
 }

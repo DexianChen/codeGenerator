@@ -47,7 +47,7 @@ public class CodeServiceImpl implements CodeService {
                         .append(conditionField.trim())
                         .append(" = #{")
                         .append(javabeanField)
-                        .append("}\r\n\t\t\t</if>\r\n");
+                        .append("} AND\r\n\t\t\t</if>\r\n");
             }
 
             sql.append("\t\t</where>\r\n");
