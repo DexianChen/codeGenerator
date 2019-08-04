@@ -9,6 +9,7 @@ app.controller("codeController", function ($scope, codeService) {
     };
 
     $scope.send = function () {
+        $scope.entity.tableName = $scope.database.tableName;
         $scope.entity.fieldList = $scope.fieldArray.toString();
         $scope.entity.conditionList = $scope.conditionArray.toString();
 
@@ -31,6 +32,7 @@ app.controller("codeController", function ($scope, codeService) {
     // 查询的字段列表
     $scope.fieldArray = [];
     $scope.updateFieldList = function ($event, fieldName) {
+        fieldName = " " + fieldName;
         if($event.target.checked){
             //选中
             $scope.fieldArray.push(fieldName);
