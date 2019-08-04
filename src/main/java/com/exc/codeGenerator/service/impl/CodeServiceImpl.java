@@ -1,13 +1,20 @@
 package com.exc.codeGenerator.service.impl;
 
+import com.exc.codeGenerator.dao.CodeDao;
+import com.exc.codeGenerator.model.InitRequestParam;
 import com.exc.codeGenerator.model.RequestParam;
 import com.exc.codeGenerator.service.CodeService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class CodeServiceImpl implements CodeService {
+    private CodeDao codeDao = new CodeDao();
 
     @Override
     public void select(RequestParam param) {
@@ -112,6 +119,18 @@ public class CodeServiceImpl implements CodeService {
 //        log.info("插入语句为：{}", sql.toString());
         System.out.println(sql);
         appendToFile(sql, param.getFilePath());
+    }
+
+    @Override
+    public List<String> getFieldList(InitRequestParam param) throws SQLException {
+        List<String> fieldList = new ArrayList<>();
+
+        Map<String, Object> FieldMap = codeDao.getFieldList(param);
+        for (Map.Entry<String, Object> entry : FieldMap.entrySet()) {
+            fieldList.add(entry.getKey());
+        }
+
+        return fieldList;
     }
 
     /**

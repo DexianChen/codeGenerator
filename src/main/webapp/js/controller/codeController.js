@@ -1,7 +1,12 @@
 //定义处理器
 app.controller("codeController", function ($scope, codeService) {
     $scope.operationList = ["insert", "delete", "update", "select"];
-    $scope.fieldNames = ["id", "name", "product_attr"];
+
+    $scope.init = function () {
+        codeService.initDatabase($scope.database).success(function (response) {
+            $scope.fieldNames = response;
+        });
+    };
 
     $scope.send = function () {
         $scope.entity.fieldList = $scope.fieldArray.toString();

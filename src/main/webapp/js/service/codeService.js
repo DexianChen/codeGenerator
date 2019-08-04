@@ -1,5 +1,9 @@
 //定义service
 app.service("codeService", function ($http) {
+    this.initDatabase = function (database) {
+        return $http.post("http://localhost:8080/initDatabase", database);
+    };
+
     this.insert = function (entity) {
         return $http.post("http://localhost:8080/insert", entity);
     };

@@ -14,8 +14,18 @@
         <filter-name>CharacterFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- 初始化 -->
+    <servlet>
+        <servlet-name>InitServlet</servlet-name>
+        <servlet-class>com.exc.codeGenerator.web.InitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InitServlet</servlet-name>
+        <url-pattern>/initDatabase</url-pattern>
+    </servlet-mapping>
     
-    <!-- 插入活动信息 -->
+    <!-- 插入 -->
     <servlet>
         <servlet-name>InsertServlet</servlet-name>
         <servlet-class>com.exc.codeGenerator.web.InsertServlet</servlet-class>
@@ -25,7 +35,7 @@
         <url-pattern>/insert</url-pattern>
     </servlet-mapping>
 
-    <!-- 更新活动信息 -->
+    <!-- 更新 -->
     <servlet>
         <servlet-name>UpdateServlet</servlet-name>
         <servlet-class>com.exc.codeGenerator.web.UpdateServlet</servlet-class>
@@ -35,7 +45,7 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
-    <!-- 获取活动信息 -->
+    <!-- 获取 -->
     <servlet>
         <servlet-name>SelectServlet</servlet-name>
         <servlet-class>com.exc.codeGenerator.web.SelectServlet</servlet-class>
@@ -45,7 +55,7 @@
         <url-pattern>/select</url-pattern>
     </servlet-mapping>
 
-    <!-- 删除活动信息 -->
+    <!-- 删除 -->
     <servlet>
         <servlet-name>DeleteServlet</servlet-name>
         <servlet-class>com.exc.codeGenerator.web.DeleteServlet</servlet-class>

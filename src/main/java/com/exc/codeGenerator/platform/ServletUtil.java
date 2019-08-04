@@ -1,11 +1,15 @@
 package com.exc.codeGenerator.platform;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 @Slf4j
 public class ServletUtil {
@@ -30,5 +34,25 @@ public class ServletUtil {
             e.printStackTrace();
         }
         return t;
+    }
+
+    /**
+     * 将实体类转换为json字符串返回到前端页面
+     * @param response 响应体
+     * @param object
+     * @throws IOException
+     */
+    public static void sendData(HttpServletResponse response, Object object) {
+        try {
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json; charset=utf-8");
+            String jsonString = JSONObject.toJSONString(object);
+            out.print(jsonString);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

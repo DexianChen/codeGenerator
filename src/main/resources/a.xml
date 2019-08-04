@@ -1,112 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="">
-
-
-    <insert id="" parameterType="">
-        INSERT INTO
-        oms_order_item
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            id
-            <if test="member_id != null">
-                member_id
-            </if>
-            <if test="member_nick_name != null">
-                member_nick_name
-            </if>
-            <if test="delete_status != null">
-                delete_status
-            </if>
-            <if test="product_id != null">
-                product_id
-            </if>
-            <if test="product_name != null">
-                product_name
-            </if>
-            <if test="product_pic != null">
-                product_pic
-            </if>
-            <if test="product_sub_title != null">
-                product_sub_title
-            </if>
-            <if test="product_sku_title != null">
-                product_sku_title
-            </if>
-            <if test="product_sn != null">
-                product_sn
-            </if>
-            <if test="product_brand != null">
-                product_brand
-            </if>
-            <if test="product_attr != null">
-                product_attr
-            </if>
-            <if test="product_price != null">
-                product_price
-            </if>
-            <if test="product_quantity != null">
-                product_quantity
-            </if>
-            <if test="product_category_id != null">
-                product_category_id
-            </if>
-            <if test="create_time != null">
-                create_time
-            </if>
-            <if test="modify_date != null">
-                modify_date
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            NULL,
-            <if test="member_id != null">
-                #{member_id}
-            </if>
-            <if test="member_nick_name != null">
-                #{member_nick_name}
-            </if>
-            <if test="delete_status != null">
-                #{delete_status}
-            </if>
-            <if test="product_id != null">
-                #{product_id}
-            </if>
-            <if test="product_name != null">
-                #{product_name}
-            </if>
-            <if test="product_pic != null">
-                #{product_pic}
-            </if>
-            <if test="product_sub_title != null">
-                #{product_sub_title}
-            </if>
-            <if test="product_sku_title != null">
-                #{product_sku_title}
-            </if>
-            <if test="product_sn != null">
-                #{product_sn}
-            </if>
-            <if test="product_brand != null">
-                #{product_brand}
-            </if>
-            <if test="product_attr != null">
-                #{product_attr}
-            </if>
-            <if test="product_price != null">
-                #{product_price}
-            </if>
-            <if test="product_quantity != null">
-                #{product_quantity}
-            </if>
-            <if test="product_category_id != null">
-                #{product_category_id}
-            </if>
-            <if test="create_time != null">
-                #{create_time}
-            </if>
-            <if test="modify_date != null">
-                #{modify_date}
-            </if>
-        </trim>
-    </insert>
+    
+	<select id="" parameterType="" resultMap="" >
+		SELECT
+		sp1,sp2,sp3
+		FROM
+		null
+		<where>
+			<if test="productBrand != null">
+				product_brand = #{productBrand}
+			</if>
+			<if test="productSn != null">
+				product_sn = #{productSn}
+			</if>
+			<if test="productAttr != null">
+				product_attr = #{productAttr}
+			</if>
+		</where>
+	</select>
 </mapper>
