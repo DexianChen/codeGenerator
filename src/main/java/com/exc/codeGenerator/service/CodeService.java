@@ -15,21 +15,8 @@ import java.util.List;
 public interface CodeService {
 
     /**
-     * 查询
-     * @param param
+     * 执行业务方法
+     * @param param 请求参数
      */
-    void select(RequestParam param);
-
-    /**
-     * 插入
-     * @param param
-     */
-    void insert(RequestParam param);
-
-    /**
-     * 初始化方法，获取对应的表中的字段列表
-     * @param param
-     * @return
-     */
-    List<String> getFieldList(InitRequestParam param) throws SQLException;
+    void execute(RequestParam param);
 }
