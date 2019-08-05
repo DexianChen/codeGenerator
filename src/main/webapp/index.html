@@ -36,26 +36,38 @@
         <table>请输入表名</table>
         <input ng-model="database.tableName" placeholder="表名"/>
     </div>
-    <button type="button" ng-click="init()">连接数据库</button><br><br>
+    <button type="button" ng-click="init()">连接数据库</button>
+    <br><br>
 
 
     <select ng-init="entity.operation = operationList[0]"
             ng-model="entity.operation" ng-options="x for x in operationList">
     </select>
+
     <div>
         <table>请选择数据库字段</table>
+        <span ng-repeat="fieldName in fieldNames">
+            <span ng-if="$index % 5 == 0 && $index != 0">
+                <input type="checkbox" ng-click="updateConditionList($event, fieldName)"/>{{fieldName}}<br>
+            </span>
+            <span ng-if="$index % 5 != 0 || $index == 0">
+                <input type="checkbox" ng-click="updateConditionList($event, fieldName)"/>{{fieldName}}
+            </span>
+        </span>
     </div>
-    <div ng-repeat="fieldName in fieldNames">
-        <input type="checkbox" ng-click="updateFieldList($event, fieldName)"/>{{fieldName}}<br>
-    </div>
-    <br>
 
     <div>
         <table>请选择条件字段</table>
+        <span ng-repeat="fieldName in fieldNames">
+            <span ng-if="$index % 5 == 0 && $index != 0">
+                <input type="checkbox" ng-click="updateConditionList($event, fieldName)"/>{{fieldName}}<br>
+            </span>
+            <span ng-if="$index % 5 != 0 || $index == 0">
+                <input type="checkbox" ng-click="updateConditionList($event, fieldName)"/>{{fieldName}}
+            </span>
+        </span>
     </div>
-    <div ng-repeat="fieldName in fieldNames">
-        <input type="checkbox" ng-click="updateConditionList($event, fieldName)"/>{{fieldName}}<br>
-    </div>
+
     <div>
         <table>文件路径</table>
         <input ng-model="entity.filePath" placeholder="选择需要添加代码的文件路径"/>
