@@ -25,10 +25,7 @@ public class InitServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         InitRequestParam param = getRequestPostStr(request, InitRequestParam.class);
-        System.out.println(param);
-
         List<String> fieldList = InitServiceImpl.getFieldList(param);
-
         sendData(response, fieldList);
     }
 }
