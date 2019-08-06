@@ -64,4 +64,14 @@
         <servlet-name>DeleteServlet</servlet-name>
         <url-pattern>/delete</url-pattern>
     </servlet-mapping>
+
+    <!-- resultMap -->
+    <servlet>
+        <servlet-name>ResultMapServlet</servlet-name>
+        <servlet-class>com.exc.codeGenerator.web.ResultMapServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResultMapServlet</servlet-name>
+        <url-pattern>/resultMap</url-pattern>
+    </servlet-mapping>
 </web-app>

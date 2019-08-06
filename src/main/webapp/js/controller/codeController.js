@@ -1,6 +1,6 @@
 //定义处理器
 app.controller("codeController", function ($scope, codeService) {
-    $scope.operationList = ["insert", "delete", "update", "select"];
+    $scope.operationList = ["insert", "delete", "update", "select", "resultMap"];
 
     $scope.init = function () {
         codeService.initDatabase($scope.database).success(function (response) {
@@ -25,6 +25,9 @@ app.controller("codeController", function ($scope, codeService) {
                 break;
             case "select":
                 codeService.select($scope.entity);
+                break;
+            case "resultMap":
+                codeService.resultMap($scope.fieldNames, $scope.entity.filePath);
                 break;
         }
     };
