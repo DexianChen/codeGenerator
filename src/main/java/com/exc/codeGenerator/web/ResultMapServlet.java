@@ -1,6 +1,7 @@
 package com.exc.codeGenerator.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.exc.codeGenerator.model.ResultMapRequestParam;
 import com.exc.codeGenerator.service.impl.ResultMapServiceImpl;
 
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
+import static com.exc.codeGenerator.platform.ServletUtil.getRequestPostStr;
+
 /**
  * 生成resultMap标签
  * @author cdx
@@ -16,10 +19,12 @@ import java.util.List;
  */
 public class ResultMapServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        String fieldNames = request.getParameter("fieldNames");
-        List<String> fieldList = JSONArray.parseArray(fieldNames, String.class);
-        String filePath = request.getParameter("filePath");
-        ResultMapServiceImpl.writeResultMap(fieldList, filePath);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        ResultMapRequestParam param = getRequestPostStr(request, ResultMapRequestParam.class);
+        System.out.println(param.toString());
+
+        List<String> fieldList = JSONArray.parseArray(param.getFieldNames(), String.class);
+
+        ResultMapServiceImpl.writeResultMap(fieldList, param.getFilePath());
     }
 }
