@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(JUnit4.class)
@@ -19,11 +20,15 @@ public class CodeDaoTest {
         param.setDatabaseName("mall");
         param.setUser("root");
         param.setPassword("123456");
-        param.setTableName("oms_cart_item");
+        param.setTableName("pms_product");
 
-        Map<String, Object> resultMap = codeDao.getFieldList(param);
-        for (Map.Entry<String, Object> entry : resultMap.entrySet()) {
-            System.out.println(entry.getKey());
+        List<Map<String, Object>> resultList = codeDao.getFieldList(param);
+        for (Map<String, Object> map : resultList) {
+            Object columnName = map.get("columnName");
+            Object dataType = map.get("dataType");
+
+            System.out.println(columnName.toString() + dataType.toString());
         }
+
     }
 }

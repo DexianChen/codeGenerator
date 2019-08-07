@@ -19,12 +19,9 @@ import static com.exc.codeGenerator.platform.ServletUtil.getRequestPostStr;
  */
 public class ResultMapServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        ResultMapRequestParam param = getRequestPostStr(request, ResultMapRequestParam.class);
-        System.out.println(param.toString());
-
-        List<String> fieldList = JSONArray.parseArray(param.getFieldNames(), String.class);
-
-        ResultMapServiceImpl.writeResultMap(fieldList, param.getFilePath());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        List<String> fieldList = JSONArray.parseArray(request.getParameter("fieldNames"), String.class);
+        String filePath = request.getParameter("filePath");
+        ResultMapServiceImpl.writeResultMap(fieldList, filePath);
     }
 }

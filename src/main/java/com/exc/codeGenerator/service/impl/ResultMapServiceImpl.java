@@ -17,26 +17,24 @@ public class ResultMapServiceImpl {
         // 拼凑mybatis的resultMap语句
         StringBuilder sql = new StringBuilder();
 
-
         sql.append("\r\n\t<resultMap id=\"\" type=\"\" >");
         for (int i=0; i<fieldList.size(); i++) {
-            String field = fieldList.get(0);
-
+            String field = fieldList.get(i);
             if (i==0){
-                sql.append("<id column=\"")
+                sql.append("\r\n\t\t<id column=\"")
                         .append(field)
                         .append("\" property=\"")
                         .append(TransformHelper.getJavabeanFieldName(field))
                         .append("\" jdbcType=\"INTEGER\" />");
             }else {
-                sql.append("<result column=\"")
+                sql.append("\r\n\t\t<result column=\"")
                         .append(field)
                         .append("\" property=\"")
                         .append(TransformHelper.getJavabeanFieldName(field))
                         .append("\" jdbcType=\"INTEGER\" />");
             }
         }
-        sql.append("\r\n\t</resultMap>");
+        sql.append("\r\n\t</resultMap>\r\n");
 
         appendToFile(sql,filePath);
     }
