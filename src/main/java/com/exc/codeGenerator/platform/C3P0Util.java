@@ -16,19 +16,11 @@ public class C3P0Util {
 	private String password;
 
 	public C3P0Util(InitRequestParam param) {
-		// 正常使用
-//		this.jdbcUrl = "jdbc:mysql://" + param.getAddress() + ":" + param.getPort() + "/" + param.getDatabaseName()
-//				+ "?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false";
-//		this.driverClass = "com.mysql.jdbc.Driver";
-//		this.user = param.getUser();
-//		this.password = param.getPassword();
-
-		// 测试使用
-		this.jdbcUrl = "jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf8"
-				+ "&autoReconnect=true&useSSL=false";
+		this.jdbcUrl = "jdbc:mysql://" + param.getAddress() + ":" + param.getPort() + "/" + param.getDatabaseName()
+				+ "?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false";
 		this.driverClass = "com.mysql.jdbc.Driver";
-		this.user = "root";
-		this.password = "123456";
+		this.user = param.getUser();
+		this.password = param.getPassword();
 	}
 
 	/**

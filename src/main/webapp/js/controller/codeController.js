@@ -2,9 +2,13 @@
 app.controller("codeController", function ($scope, codeService) {
     $scope.operationList = ["insert", "delete", "update", "select", "resultMap"];
 
+    // init data 测试使用
+    $scope.database = {"address":"localhost", "port":"3306", "databaseName":"mall", "user":"root", "password":"123456"};
+
     $scope.init = function () {
         codeService.initDatabase($scope.database).success(function (response) {
-            $scope.fieldNames = response;
+            $scope.fieldNameList = response.fieldNameList;
+            $scope.fieldTypeList = response.fieldTypeList;
         });
     };
 
@@ -27,7 +31,7 @@ app.controller("codeController", function ($scope, codeService) {
                 codeService.select($scope.entity);
                 break;
             case "resultMap":
-                codeService.resultMap($scope.fieldNames, $scope.entity.filePath);
+                codeService.resultMap($scope.fieldNameList, $scope.fieldTypeList, $scope.entity.filePath);
                 break;
         }
     };

@@ -1,3 +1,5 @@
+package com.exc.codeGenerator.dao;
+
 import com.exc.codeGenerator.dao.CodeDao;
 import com.exc.codeGenerator.model.InitRequestParam;
 import org.junit.Test;
@@ -7,6 +9,8 @@ import org.junit.runners.JUnit4;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 public class CodeDaoTest {
@@ -23,12 +27,7 @@ public class CodeDaoTest {
         param.setTableName("pms_product");
 
         List<Map<String, Object>> resultList = codeDao.getFieldList(param);
-        for (Map<String, Object> map : resultList) {
-            Object columnName = map.get("columnName");
-            Object dataType = map.get("dataType");
-
-            System.out.println(columnName.toString() + dataType.toString());
-        }
-
+        Map<String, Object> map = resultList.get(0);
+        assertEquals("bigint", map.get("dataType"));
     }
 }

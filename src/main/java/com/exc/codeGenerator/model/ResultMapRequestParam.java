@@ -8,6 +8,7 @@ import lombok.Data;
  */
 @Data
 public class ResultMapRequestParam {
-    private String fieldNames;
+    private String fieldNameList;
+    private String fieldTypeList;
     private String filePath;
 }

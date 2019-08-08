@@ -32,4 +32,20 @@ public class TransformHelper {
 
         return sb.toString();
     }
+
+    /**
+     * 将数据库类型与jdbc类型进行映射
+     * @param fieldType 数据库字段类型
+     */
+    public static String jdbcTypeMap(String fieldType) {
+        // 有其他类型不一致再添加
+        switch (fieldType) {
+            case "int":
+                return "INTEGER";
+            case "datetime":
+                return "TIMESTAMP";
+            default:
+                return fieldType.toUpperCase();
+        }
+    }
 }

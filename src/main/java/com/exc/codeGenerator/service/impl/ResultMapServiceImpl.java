@@ -13,25 +13,30 @@ import static com.exc.codeGenerator.platform.WriteHelper.appendToFile;
 public class ResultMapServiceImpl {
 
     // TODO
-    public static void writeResultMap(List<String> fieldList, String filePath) {
+    public static void writeResultMap(List<String> fieldNameList, List<String> fieldTypeList, String filePath) {
         // 拼凑mybatis的resultMap语句
         StringBuilder sql = new StringBuilder();
 
         sql.append("\r\n\t<resultMap id=\"\" type=\"\" >");
-        for (int i=0; i<fieldList.size(); i++) {
-            String field = fieldList.get(i);
+        for (int i=0; i<fieldNameList.size(); i++) {
+            String fieldName = fieldNameList.get(i);
+            String fieldType = fieldTypeList.get(i);
             if (i==0){
                 sql.append("\r\n\t\t<id column=\"")
-                        .append(field)
+                        .append(fieldName)
                         .append("\" property=\"")
-                        .append(TransformHelper.getJavabeanFieldName(field))
-                        .append("\" jdbcType=\"INTEGER\" />");
+                        .append(TransformHelper.getJavabeanFieldName(fieldName))
+                        .append("\" jdbcType=\"")
+                        .append(fieldType)
+                        .append("\" />");
             }else {
                 sql.append("\r\n\t\t<result column=\"")
-                        .append(field)
+                        .append(fieldName)
                         .append("\" property=\"")
-                        .append(TransformHelper.getJavabeanFieldName(field))
-                        .append("\" jdbcType=\"INTEGER\" />");
+                        .append(TransformHelper.getJavabeanFieldName(fieldName))
+                        .append("\" jdbcType=\"")
+                        .append(fieldType)
+                        .append("\" />");
             }
         }
         sql.append("\r\n\t</resultMap>\r\n");

@@ -20,8 +20,9 @@ import static com.exc.codeGenerator.platform.ServletUtil.getRequestPostStr;
 public class ResultMapServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        List<String> fieldList = JSONArray.parseArray(request.getParameter("fieldNames"), String.class);
+        List<String> fieldNameList = JSONArray.parseArray(request.getParameter("fieldNameList"), String.class);
+        List<String> fieldTypeList = JSONArray.parseArray(request.getParameter("fieldTypeList"), String.class);
         String filePath = request.getParameter("filePath");
-        ResultMapServiceImpl.writeResultMap(fieldList, filePath);
+        ResultMapServiceImpl.writeResultMap(fieldNameList, fieldTypeList, filePath);
     }
 }

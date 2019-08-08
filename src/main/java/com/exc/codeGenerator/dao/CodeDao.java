@@ -3,7 +3,6 @@ package com.exc.codeGenerator.dao;
 import com.exc.codeGenerator.model.InitRequestParam;
 import com.exc.codeGenerator.platform.C3P0Util;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import java.sql.SQLException;
